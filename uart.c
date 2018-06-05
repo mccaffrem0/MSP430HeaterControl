@@ -46,4 +46,3 @@ void MSP_UART_SendSequence(uint8_t * buffer_ptr, uint8_t length){
 uint8_t MSP_UART_Busy(){
     return UCA0STATW & UCBUSY;
 }
-

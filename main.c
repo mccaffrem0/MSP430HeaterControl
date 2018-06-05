@@ -23,10 +23,19 @@ int main(void)
 
     while (1)
     {
+
         if (sys.uart.pending_response)
         {
             Respond(&sys);
         }
+
+        if (sys.timer_flag)
+        {
+            ADC_Update(&sys);
+            LCD_Display(SI_Lookup(sys.adc.value));
+            sys.timer_flag = 0;
+        }
+
     }
 
 }
@@ -92,3 +101,17 @@ void __attribute__ ((interrupt(ADC_VECTOR))) ADC_ISR (void)
     }
 }
 
+// Timer A0 interrupt service routine
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector = TIMER0_A0_VECTOR
+__interrupt void Timer_A (void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) Timer_A (void)
+#else
+#error Compiler not supported!
+#endif
+{
+    sys.timer_flag = 1;
+//    P4OUT ^= BIT0;
+
+}

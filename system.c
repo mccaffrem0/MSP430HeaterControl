@@ -21,18 +21,35 @@ void SystemInit(system * sys){
 
     MSP_ADC_Assign(&(sys->adc));
     MSP_UART_Assign(&(sys->uart));
+
     LCD_Init();
-
-}
-
-void Respond(system * sys){
-    sys->adc.ready_flag = 0;
     sys->adc.Start();
     while(sys->adc.ready_flag == 0){}
     uint8_t analog_value[2] = {sys->adc.value >> 8, sys->adc.value & 0xff};
     sys->uart.SendSequence(analog_value, 2);
-    LCD_Display(sys->adc.value);
+    LCD_Display(SI_Lookup(sys->adc.value));
+
     P1DIR |= BIT4;
     P1OUT |= BIT4;
+
+    TimerInit();
+
+
+}
+
+void Respond(system * sys){
+
+    ADC_Update(sys);
+    uint16_t value = SI_Lookup(sys->adc.value);
+    sys->uart.SendSequence((uint8_t*)&value, 2);
     sys->uart.pending_response = 0;
+
+}
+
+void ADC_Update(system * sys){
+
+    sys->adc.ready_flag = 0;
+    sys->adc.Start();
+    while(sys->adc.ready_flag == 0){}
+
 }

@@ -61,8 +61,6 @@ void LCD_Init()
 
     LCDCTL0 |= LCD4MUX | LCDON;                   // Turn on LCD, 4-mux selected
 
-//        PMMCTL0_H = PMMPW_H;                                       // Open PMM Registers for write
-//        PMMCTL0_L |= PMMREGOFF_L;                                  // and set PMMREGOFF
 }
 
 void LCD_Display(uint16_t number)
@@ -73,6 +71,7 @@ void LCD_Display(uint16_t number)
     LCDMEM[pos3] = digit[(number % 100) / 10];
     LCDMEM[pos4] = digit[number % 10];
     LCDMEMW[9] = 0x220E;
+    LCDMEM[9] = 0x1; //Decimal point
 
 }
 
