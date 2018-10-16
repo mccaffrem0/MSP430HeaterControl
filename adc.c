@@ -2,7 +2,7 @@
  * adc.c
  *
  *  Created on: Jun 3, 2018
- *      Author: dothe
+ *      Author: Michael McCaffrey
  */
 
 #include "adc.h"

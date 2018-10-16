@@ -2,7 +2,7 @@
  * temp.c
  *
  *  Created on: Jun 5, 2018
- *      Author: dothe
+ *      Author: Michael McCaffrey
  */
 
 #include "temp.h"
@@ -57,7 +57,6 @@ uint16_t SI_Lookup(uint16_t adc_value){
         }
     }
     return (uint16_t)(temp * 10);
-//    return (uint16_t)(200.0 * 10);
 
 }
 

@@ -15,24 +15,23 @@ void SystemInit(system * sys){
     CSCTL1 |= DCORSEL_3;                    // Set DCO = 8MHz
     CSCTL2 = FLLD_0 + 243;                  // DCODIV = 8MHz
     WDTCTL = WDTPW | WDTHOLD;               // stop watchdog timer
-    PM5CTL0 &= ~LOCKLPM5;
+    PM5CTL0 &= ~LOCKLPM5;                   // clear register lock
     P4DIR = 0x01;
     P4OUT = 0;
 
-    MSP_ADC_Assign(&(sys->adc));
+    MSP_ADC_Assign(&(sys->adc));            // assign hardware agnostic code to MSP430-specific code
     MSP_UART_Assign(&(sys->uart));
 
-    LCD_Init();
-    sys->adc.Start();
-    while(sys->adc.ready_flag == 0){}
-    uint8_t analog_value[2] = {sys->adc.value >> 8, sys->adc.value & 0xff};
-    sys->uart.SendSequence(analog_value, 2);
-    LCD_Display(SI_Lookup(sys->adc.value));
+    LCD_Init();                             // initialize LCD
+    sys->adc.Start();                       // start ADC
+    while(sys->adc.ready_flag == 0){}       // wait for ADC to settle
 
-    P1DIR |= BIT4;
-    P1OUT |= BIT4;
+    P1DIR |= BIT4;                          // debug LED
+    P1OUT |= BIT4;                          // debug LED
 
-    TimerInit();
+    TimerInit();                            // initialize and start timer
+
+    PM5CTL0 |= LOCKLPM5;                    // set register lock
 
 
 }

@@ -2,7 +2,7 @@
  * uart.c
  *
  *  Created on: Jun 2, 2018
- *      Author: dothe
+ *      Author: Michael McCaffrey
  */
 
 #include "uart.h"

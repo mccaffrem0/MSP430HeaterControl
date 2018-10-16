@@ -2,7 +2,7 @@
  * timer.c
  *
  *  Created on: Jun 4, 2018
- *      Author: dothe
+ *      Author: Michael McCaffrey
  */
 
 #include "timer.h"

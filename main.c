@@ -1,4 +1,3 @@
-#include <msp430.h> 
 
 /**
  * main.c
@@ -7,6 +6,11 @@
  * UART WORKS
  * ADC WORKS
  * BASIC LCD WORKS
+ *
+ * This code allows an MSP430FR4133 to fetch temperature from an SI diode via ADC and lookup table.
+ * Data is displayed on LCD and can also be delivered over UART connection.
+ * Currently, temperature data is sent in response to an incoming carriage return.
+ * Additional functionality would require more complex messages, current idea is a simple version of SCPI protocol.
  *
  * TODO:
  * SCPI-Lite Protocol
@@ -57,7 +61,7 @@ void __attribute__ ((interrupt(USCI_A0_VECTOR))) USCI_A0_ISR (void)
         {
             sys.uart.pending_response = 1;
         }
-        else
+        else    // only necessary if using some protocol
         {
             sys.uart.rx_buffer[sys.uart.buffer_size] = sys.uart.rx;
             sys.uart.buffer_size++;

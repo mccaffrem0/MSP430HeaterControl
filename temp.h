@@ -2,7 +2,7 @@
  * temp.h
  *
  *  Created on: Jun 5, 2018
- *      Author: dothe
+ *      Author: Michael McCaffrey
  */
 
 #ifndef TEMP_H_
